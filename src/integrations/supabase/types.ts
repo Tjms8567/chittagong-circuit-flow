@@ -14,16 +14,350 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookings: {
+        Row: {
+          booking_number: string
+          check_in: string
+          check_out: string
+          created_at: string
+          created_by: string | null
+          guest_count: number
+          guest_email: string | null
+          guest_id_number: string | null
+          guest_name: string
+          guest_phone: string
+          id: string
+          priority: string
+          purpose: string | null
+          room_id: string | null
+          special_requests: string | null
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          booking_number: string
+          check_in: string
+          check_out: string
+          created_at?: string
+          created_by?: string | null
+          guest_count?: number
+          guest_email?: string | null
+          guest_id_number?: string | null
+          guest_name: string
+          guest_phone: string
+          id?: string
+          priority?: string
+          purpose?: string | null
+          room_id?: string | null
+          special_requests?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          booking_number?: string
+          check_in?: string
+          check_out?: string
+          created_at?: string
+          created_by?: string | null
+          guest_count?: number
+          guest_email?: string | null
+          guest_id_number?: string | null
+          guest_name?: string
+          guest_phone?: string
+          id?: string
+          priority?: string
+          purpose?: string | null
+          room_id?: string | null
+          special_requests?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conference_bookings: {
+        Row: {
+          booking_date: string
+          booking_id: string | null
+          created_at: string
+          end_time: string
+          equipment_needed: string[] | null
+          food_details: string | null
+          food_required: boolean | null
+          guest_count: number
+          hall_name: string
+          id: string
+          notes: string | null
+          start_time: string
+          updated_at: string
+        }
+        Insert: {
+          booking_date: string
+          booking_id?: string | null
+          created_at?: string
+          end_time: string
+          equipment_needed?: string[] | null
+          food_details?: string | null
+          food_required?: boolean | null
+          guest_count?: number
+          hall_name: string
+          id?: string
+          notes?: string | null
+          start_time: string
+          updated_at?: string
+        }
+        Update: {
+          booking_date?: string
+          booking_id?: string | null
+          created_at?: string
+          end_time?: string
+          equipment_needed?: string[] | null
+          food_details?: string | null
+          food_required?: boolean | null
+          guest_count?: number
+          hall_name?: string
+          id?: string
+          notes?: string | null
+          start_time?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conference_bookings_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoices: {
+        Row: {
+          booking_id: string | null
+          created_at: string
+          discount_amount: number
+          due_date: string | null
+          final_amount: number
+          id: string
+          invoice_number: string
+          notes: string | null
+          paid_date: string | null
+          status: string
+          tax_amount: number
+          total_amount: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          booking_id?: string | null
+          created_at?: string
+          discount_amount?: number
+          due_date?: string | null
+          final_amount?: number
+          id?: string
+          invoice_number: string
+          notes?: string | null
+          paid_date?: string | null
+          status?: string
+          tax_amount?: number
+          total_amount?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          booking_id?: string | null
+          created_at?: string
+          discount_amount?: number
+          due_date?: string | null
+          final_amount?: number
+          id?: string
+          invoice_number?: string
+          notes?: string | null
+          paid_date?: string | null
+          status?: string
+          tax_amount?: number
+          total_amount?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          created_by: string | null
+          id: string
+          invoice_id: string | null
+          notes: string | null
+          payment_date: string
+          payment_method: string
+          payment_reference: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          invoice_id?: string | null
+          notes?: string | null
+          payment_date?: string
+          payment_method: string
+          payment_reference?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          invoice_id?: string | null
+          notes?: string | null
+          payment_date?: string
+          payment_method?: string
+          payment_reference?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          department: string | null
+          designation: string | null
+          email: string | null
+          full_name: string
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          department?: string | null
+          designation?: string | null
+          email?: string | null
+          full_name: string
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          department?: string | null
+          designation?: string | null
+          email?: string | null
+          full_name?: string
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      rooms: {
+        Row: {
+          amenities: string[] | null
+          capacity: number
+          created_at: string
+          description: string | null
+          floor: number | null
+          id: string
+          price_per_night: number
+          room_number: string
+          room_type: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amenities?: string[] | null
+          capacity?: number
+          created_at?: string
+          description?: string | null
+          floor?: number | null
+          id?: string
+          price_per_night: number
+          room_number: string
+          room_type: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amenities?: string[] | null
+          capacity?: number
+          created_at?: string
+          description?: string | null
+          floor?: number | null
+          id?: string
+          price_per_night?: number
+          room_number?: string
+          room_type?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "guest" | "vvip" | "staff" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +484,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["guest", "vvip", "staff", "admin"],
+    },
   },
 } as const
